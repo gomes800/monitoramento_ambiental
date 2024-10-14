@@ -78,4 +78,4 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: "monitoramentoambiental"
-          package: "target/monitoramento_ambiental-0.0.1-SNAPSHOT.jar"
+          package: "${{ github.workspace }}/target/monitoramento_ambiental-0.0.1-SNAPSHOT.jar"
