@@ -76,4 +76,5 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: "Github_deploy"
+          resource-group: "test"
           package: "target/monitoramento_ambiental-0.0.1-SNAPSHOT.jar"
