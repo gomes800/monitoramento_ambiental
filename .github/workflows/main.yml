@@ -26,7 +26,10 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean install
-
+        
+      - name: List contents of target directory
+        run: ls target
+        
       - name: Run Tests
         run: mvn test
 
