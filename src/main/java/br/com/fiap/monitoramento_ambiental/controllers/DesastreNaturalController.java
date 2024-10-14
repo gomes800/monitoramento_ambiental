@@ -44,4 +44,3 @@ public class DesastreNaturalController {
         service.deleteById(id);
     }
 }
-
