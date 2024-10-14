@@ -75,5 +75,5 @@ jobs:
       - name: Deploy to Azure Web App (Production)
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "Github_deploy_PRODUCAO"
+          app-name: "Github_deploy"
           package: "target/monitoramento_ambiental-0.0.1-SNAPSHOT.jar"
