@@ -44,7 +44,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: app-package
 
@@ -64,8 +64,8 @@ jobs:
           package: "monitoramento_ambiental-0.0.1-SNAPSHOT.jar"
 
   deploy-production:
-    needs: build
-    if: github.ref == 'refs/heads/master'
+    needs: deploy-staging
+    if: github.ref == 'refs/heads/staging'  # Vai executar após staging ser bem-sucedido
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -84,8 +84,6 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           enable-AzPSSession: true
 
-      - name: Deploy to Azure Web App (Production)
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: "monitoramentoambiental"
-          package: "monitoramento_ambiental-0.0.1-SNAPSHOT.jar"
+      - name: Swap Staging to Production
+        run: |
+          az webapp deployment slot swap --resource-group test --name "monitoramentoambiental" --slot "staging" --target-slot "production"
