@@ -8,3 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface QualidadeArAguaRepository extends JpaRepository<QualidadeArAgua, Long> {
 }
 
+
