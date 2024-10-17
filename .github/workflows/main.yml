@@ -59,13 +59,13 @@ jobs:
       - name: Deploy to Azure Web App (Staging)
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "monitoramentoambiental"
+          app-name: "monitor-ambiental"
           slot-name: "staging"
           package: "monitoramento_ambiental-0.0.1-SNAPSHOT.jar"
 
   deploy-production:
     needs: deploy-staging
-    if: github.ref == 'refs/heads/staging'  # Vai executar após staging ser bem-sucedido
+    if: github.ref == 'refs/heads/staging'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
