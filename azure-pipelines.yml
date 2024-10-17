@@ -21,7 +21,7 @@ steps:
 
   - task: AzureWebApp@1
     inputs:
-      azureSubscription: 'NomeDoSeuAzureSubscription'
-      appName: 'NomeDoSeuAppService'
+      azureSubscription: 'monitor'
+      appName: 'Ambiental-monitor'
       package: '$(System.DefaultWorkingDirectory)/**/*.jar'
       deploymentMethod: 'auto'
