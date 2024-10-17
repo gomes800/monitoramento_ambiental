@@ -1,0 +1,27 @@
+trigger:
+  branches:
+    include:
+      - master
+      - staging
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: MavenAuthenticate@0
+    inputs:
+      mavenAuthenticate: true
+  
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'clean install'
+      publishJUnitResults: true
+      testResultsFiles: '**/TEST-*.xml'
+
+  - task: AzureWebApp@1
+    inputs:
+      azureSubscription: 'NomeDoSeuAzureSubscription'
+      appName: 'NomeDoSeuAppService'
+      package: '$(System.DefaultWorkingDirectory)/**/*.jar'
+      deploymentMethod: 'auto'
