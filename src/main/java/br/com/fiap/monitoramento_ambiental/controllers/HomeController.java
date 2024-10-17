@@ -11,3 +11,4 @@ public class HomeController {
         return "Aplicacao de monitoramento ambiental esta rodando!";
     }
 }
+
