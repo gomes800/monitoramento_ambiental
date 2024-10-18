@@ -18,6 +18,9 @@ jobs:
   pool:
     name: autohospedado  # ou o nome do seu agente auto-hospedado
   steps:
+    - script: echo $PATH
+      displayName: 'Check PATH Variable'
+
     - script: mvn -v
       displayName: 'Check Maven Version'
       
