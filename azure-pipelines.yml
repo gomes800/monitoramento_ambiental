@@ -15,8 +15,8 @@ variables:
 jobs:
 - job: build
   displayName: 'Build Job'
-  pool:
-    name: autohospedado  # ou o nome do seu agente auto-hospedado
+  container:
+    image: monitoramento_ambiental
   steps:
     - script: echo %PATH%
       displayName: 'Check PATH Variable'
