@@ -86,4 +86,4 @@ jobs:
 
       - name: Swap Staging to Production
         run: |
-          az webapp deployment slot swap --resource-group test --name "monitoramentoambiental" --slot "staging" --target-slot "production"
+          az webapp deployment slot swap --resource-group Trabalhos --name "monitoramentoambiental" --slot "staging" --target-slot "production"
