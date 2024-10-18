@@ -18,6 +18,9 @@ jobs:
   pool:
     name: autohospedado  # ou o nome do seu agente auto-hospedado
   steps:
+    - script: mvn -v
+      displayName: 'Check Maven Version'
+      
     - task: MavenAuthenticate@0
       inputs:
         mavenAuthenticate: true
