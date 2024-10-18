@@ -82,7 +82,7 @@ jobs:
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'monitor'  # Altere para o nome do seu serviço de conexão Azure
-        scriptType: 'bash'
+        scriptType: 'ps'
         scriptLocation: 'inlineScript'
         inlineScript: |
           az webapp deployment slot swap --resource-group $(resourceGroup) --name $(appName) --slot staging --target-slot production
