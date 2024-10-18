@@ -24,9 +24,11 @@ jobs:
 
     - script: mvn clean install
       displayName: 'Build with Maven'
+      workingDirectory: '$(Build.SourcesDirectory)'
 
     - script: mvn test
       displayName: 'Run Tests'
+      workingDirectory: '$(Build.SourcesDirectory)'
 
     - task: PublishBuildArtifacts@1
       inputs:
