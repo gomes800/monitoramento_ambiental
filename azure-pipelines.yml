@@ -5,23 +5,65 @@ trigger:
       - staging
 
 pool:
-  name: autohospedado
+  name: autohospedado  # Substitua pelo nome do seu pool de agentes se necessário
 
-steps:
-  - task: MavenAuthenticate@0
-    inputs:
-      mavenAuthenticate: true
-  
-  - task: Maven@3
-    inputs:
-      mavenPomFile: 'pom.xml'
-      goals: 'clean install'
-      publishJUnitResults: true
-      testResultsFiles: '**/TEST-*.xml'
+variables:
+  appName: "monitoramentoambiental"
+  artifactName: "monitoramento_ambiental-0.0.1-SNAPSHOT.jar"
+  resourceGroup: "Trabalhos"
 
-  - task: AzureWebApp@1
-    inputs:
-      azureSubscription: 'monitor'
-      appName: 'Ambiental-monitor'
-      package: '$(System.DefaultWorkingDirectory)/**/*.jar'
-      deploymentMethod: 'auto'
+jobs:
+- job: build
+  displayName: 'Build Job'
+  pool:
+    vmImage: 'ubuntu-latest'  # ou o nome do seu agente auto-hospedado
+  steps:
+    - task: MavenAuthenticate@0
+      inputs:
+        mavenAuthenticate: true
+
+    - script: mvn clean install
+      displayName: 'Build with Maven'
+
+    - script: mvn test
+      displayName: 'Run Tests'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: 'target/$(artifactName)'
+        ArtifactName: 'app-package'
+
+- job: deploy_staging
+  displayName: 'Deploy to Staging'
+  dependsOn: build
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/staging')
+  pool:
+    vmImage: 'ubuntu-latest'  # ou o nome do seu agente auto-hospedado
+  steps:
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        buildType: 'current'
+        downloadPath: '$(System.DefaultWorkingDirectory)'
+
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'monitor'  # Altere para o nome do seu serviço de conexão Azure
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az webapp deploy --resource-group $(resourceGroup) --name $(appName) --slot staging --src-path $(System.DefaultWorkingDirectory)/app-package/$(artifactName)
+
+- job: deploy_production
+  displayName: 'Swap Staging to Production'
+  dependsOn: deploy_staging
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/staging')
+  pool:
+    vmImage: 'ubuntu-latest'  # ou o nome do seu agente auto-hospedado
+  steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'monitor'  # Altere para o nome do seu serviço de conexão Azure
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az webapp deployment slot swap --resource-group $(resourceGroup) --name $(appName) --slot staging --target-slot production
