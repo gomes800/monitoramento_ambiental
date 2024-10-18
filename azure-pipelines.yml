@@ -56,10 +56,21 @@ jobs:
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'monitor'  # Altere para o nome do seu serviço de conexão Azure
-        scriptType: 'bash'
+        scriptType: 'ps'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          az webapp deploy --resource-group $(resourceGroup) --name $(appName) --slot staging --src-path $(System.DefaultWorkingDirectory)/app-package/$(artifactName)
+          $resourceGroup = "$(resourceGroup)"
+          $appName = "$(appName)"
+          $slotName = "staging"
+          $srcPath = "$(System.DefaultWorkingDirectory)/app-package/$(artifactName)"
+
+          # Verificar se o caminho do arquivo de origem existe
+          if (Test-Path $srcPath) {
+              az webapp deploy --resource-group $resourceGroup --name $appName --slot $slotName --src-path $srcPath
+          } else {
+              Write-Host "O caminho de origem não existe: $srcPath"
+              exit 1  # Saia com código de erro se o arquivo não for encontrado
+          }
 
 - job: deploy_production
   displayName: 'Swap Staging to Production'
