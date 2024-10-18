@@ -16,7 +16,7 @@ jobs:
 - job: build
   displayName: 'Build Job'
   pool:
-    vmImage: 'ubuntu-latest'  # ou o nome do seu agente auto-hospedado
+    autohospedado  # ou o nome do seu agente auto-hospedado
   steps:
     - task: MavenAuthenticate@0
       inputs:
@@ -38,7 +38,7 @@ jobs:
   dependsOn: build
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/staging')
   pool:
-    vmImage: 'ubuntu-latest'  # ou o nome do seu agente auto-hospedado
+    autohospedado  # ou o nome do seu agente auto-hospedado
   steps:
     - task: DownloadBuildArtifacts@1
       inputs:
@@ -58,7 +58,7 @@ jobs:
   dependsOn: deploy_staging
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/staging')
   pool:
-    vmImage: 'ubuntu-latest'  # ou o nome do seu agente auto-hospedado
+    autohospedado  # ou o nome do seu agente auto-hospedado
   steps:
     - task: AzureCLI@2
       inputs:
