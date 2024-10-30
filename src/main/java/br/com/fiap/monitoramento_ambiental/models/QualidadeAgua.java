@@ -19,6 +19,8 @@ public class QualidadeAgua {
     private NivelPoluicao nivelPoluicao;
     private Instant dataHora;
 
+    public QualidadeAgua(){}
+
     public QualidadeAgua(Long id, String localizacao, NivelPoluicao nivelPoluicao, Instant dataHora) {
         this.id = id;
         this.localizacao = localizacao;

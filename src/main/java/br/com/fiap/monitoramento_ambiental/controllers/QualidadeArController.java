@@ -1,5 +1,6 @@
 package br.com.fiap.monitoramento_ambiental.controllers;
 
+import br.com.fiap.monitoramento_ambiental.models.QualidadeAr;
 import br.com.fiap.monitoramento_ambiental.services.QualidadeArService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,19 +10,19 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/qualidade_ar")
-public class QualidadeAr {
+public class QualidadeArController {
 
     @Autowired
     private QualidadeArService service;
 
     @GetMapping
-    public List<br.com.fiap.monitoramento_ambiental.models.QualidadeAr> getAllQualidadeAr() {
+    public List<QualidadeAr> getAllQualidadeAr() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<br.com.fiap.monitoramento_ambiental.models.QualidadeAr> getQualidadeArById(@PathVariable Long id) {
-        br.com.fiap.monitoramento_ambiental.models.QualidadeAr qualidadeAr = service.findById(id);
+    public ResponseEntity<QualidadeAr> getQualidadeArById(@PathVariable Long id) {
+        QualidadeAr qualidadeAr = service.findById(id);
 
         if (qualidadeAr == null) {
             return ResponseEntity.notFound().build();
@@ -30,21 +31,21 @@ public class QualidadeAr {
     }
 
     @PostMapping
-    public br.com.fiap.monitoramento_ambiental.models.QualidadeAr createQualidadeAr(@RequestBody br.com.fiap.monitoramento_ambiental.models.QualidadeAr qualidadeAr) {
+    public QualidadeAr createQualidadeAr(@RequestBody QualidadeAr qualidadeAr) {
         return service.save(qualidadeAr);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<br.com.fiap.monitoramento_ambiental.models.QualidadeAr> updateQualidadeAr(@PathVariable Long id, @RequestBody br.com.fiap.monitoramento_ambiental.models.QualidadeAr qualidadeAr) {
+    public ResponseEntity<QualidadeAr> updateQualidadeAr(@PathVariable Long id, @RequestBody QualidadeAr qualidadeAr) {
 
-        br.com.fiap.monitoramento_ambiental.models.QualidadeAr existingQualidadeAr = service.findById(id);
+       QualidadeAr existingQualidadeAr = service.findById(id);
 
         if (existingQualidadeAr != null) {
             existingQualidadeAr.setLocalizacao(qualidadeAr.getLocalizacao());
-            existingQualidadeAr.setStatus(qualidadeAr.isStatus());
+            existingQualidadeAr.setNivelPoluicao(qualidadeAr.getNivelPoluicao());
             existingQualidadeAr.setDataHora(qualidadeAr.getDataHora());
 
-            br.com.fiap.monitoramento_ambiental.models.QualidadeAr updatedQualidadeAr = service.save(existingQualidadeAr);
+            QualidadeAr updatedQualidadeAr = service.save(existingQualidadeAr);
             return ResponseEntity.ok(updatedQualidadeAr);
         }
 
