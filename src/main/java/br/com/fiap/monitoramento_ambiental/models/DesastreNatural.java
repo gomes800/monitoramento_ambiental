@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,8 +18,15 @@ public class DesastreNatural {
     private String tipo;
     private String localizacao;
     private String severidade;
-    private LocalDateTime dataHora;
+    private Instant dataHora;
 
-    public void setId(Long id) {
+    public DesastreNatural(){}
+
+    public DesastreNatural(Long id, String tipo, String localizacao, String severidade, Instant dataHora) {
+        this.id = id;
+        this.tipo = tipo;
+        this.localizacao = localizacao;
+        this.severidade = severidade;
+        this.dataHora = dataHora;
     }
 }
