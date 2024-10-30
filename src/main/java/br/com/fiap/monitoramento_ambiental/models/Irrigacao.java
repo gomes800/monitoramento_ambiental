@@ -1,12 +1,13 @@
 package br.com.fiap.monitoramento_ambiental.models;
 
+import br.com.fiap.monitoramento_ambiental.services.IrrigacaoService;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Data
@@ -16,19 +17,15 @@ public class Irrigacao {
     private Long id;
     private String localizacao;
     private boolean status;
-    private LocalDateTime dataHora;
+    private Instant dataHora;
 
-    public void setId(Long id) {
-    }
+    public Irrigacao(){}
 
-    public void setLocalizacao(String testeLocal) {
-    }
-
-    public void setStatus(boolean b) {
-    }
-
-    public void setDataHora(LocalDateTime now) {
-
+    public Irrigacao(Long id, String localizacao, boolean status, Instant dataHora) {
+        this.id = id;
+        this.localizacao = localizacao;
+        this.status = status;
+        this.dataHora = dataHora;
     }
 }
 

@@ -3,9 +3,9 @@ package br.com.fiap.monitoramento_ambiental.controllers;
 import br.com.fiap.monitoramento_ambiental.models.Irrigacao;
 import br.com.fiap.monitoramento_ambiental.services.IrrigacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -21,8 +21,13 @@ public class IrrigacaoController {
     }
 
     @GetMapping("/{id}")
-    public Irrigacao getIrrigacaoById(@PathVariable Long id) {
-        return service.findById(id);
+    public ResponseEntity<Irrigacao> getIrrigacaoById(@PathVariable Long id) {
+        Irrigacao irrigacao = service.findById(id);
+
+        if (irrigacao == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(irrigacao);
     }
 
     @PostMapping
@@ -31,13 +36,20 @@ public class IrrigacaoController {
     }
 
     @PutMapping("/{id}")
-    public Irrigacao updateIrrigacao(@PathVariable Long id, @RequestBody Irrigacao irrigacao) {
+    public ResponseEntity<Irrigacao> updateIrrigacao(@PathVariable Long id, @RequestBody Irrigacao irrigacao) {
+
         Irrigacao existingIrrigacao = service.findById(id);
+
         if (existingIrrigacao != null) {
-            irrigacao.setId(id);
-            return service.save(irrigacao);
+            existingIrrigacao.setLocalizacao(irrigacao.getLocalizacao());
+            existingIrrigacao.setStatus(irrigacao.isStatus());
+            existingIrrigacao.setDataHora(irrigacao.getDataHora());
+
+            Irrigacao updatedIrrigacao = service.save(existingIrrigacao);
+            return ResponseEntity.ok(updatedIrrigacao);
         }
-        return null;
+
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
@@ -45,13 +57,5 @@ public class IrrigacaoController {
         service.deleteById(id);
     }
 
-    @PostMapping("/test")
-    public Irrigacao createTestIrrigacao() {
-        Irrigacao irrigacao = new Irrigacao();
-        irrigacao.setLocalizacao("Teste Local");
-        irrigacao.setStatus(true);
-        irrigacao.setDataHora(LocalDateTime.now());
-        return service.save(irrigacao);
-    }
 
 }
