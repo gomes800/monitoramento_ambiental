@@ -1,6 +1,6 @@
 package br.com.fiap.monitoramento_ambiental.models;
 
-import br.com.fiap.monitoramento_ambiental.services.IrrigacaoService;
+import br.com.fiap.monitoramento_ambiental.models.enums.NivelPoluicao;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,21 +11,18 @@ import java.time.Instant;
 
 @Entity
 @Data
-public class Irrigacao {
+public class QualidadeAgua {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String localizacao;
-    private boolean status;
+    private NivelPoluicao nivelPoluicao;
     private Instant dataHora;
 
-    public Irrigacao(){}
-
-    public Irrigacao(Long id, String localizacao, boolean status, Instant dataHora) {
+    public QualidadeAgua(Long id, String localizacao, NivelPoluicao nivelPoluicao, Instant dataHora) {
         this.id = id;
         this.localizacao = localizacao;
-        this.status = status;
+        this.nivelPoluicao = nivelPoluicao;
         this.dataHora = dataHora;
     }
 }
-

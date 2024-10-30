@@ -1,15 +1,14 @@
 package br.com.fiap.monitoramento_ambiental.config;
 
 import br.com.fiap.monitoramento_ambiental.models.DesastreNatural;
-import br.com.fiap.monitoramento_ambiental.models.Irrigacao;
+import br.com.fiap.monitoramento_ambiental.models.enums.NivelPoluicao;
 import br.com.fiap.monitoramento_ambiental.repositories.DesastreNaturalRepository;
-import br.com.fiap.monitoramento_ambiental.repositories.IrrigacaoRepository;
+import br.com.fiap.monitoramento_ambiental.repositories.QualidadeArRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Component
 public class Testconfig implements CommandLineRunner {
@@ -17,7 +16,7 @@ public class Testconfig implements CommandLineRunner {
     private DesastreNaturalRepository desastreNaturalRepository;
 
     @Autowired
-    private IrrigacaoRepository irrigacaoRepository;
+    private QualidadeArRepository qualidadeArRepository;
 
     public void run(String... args) throws Exception {
         System.out.println("Inicializando dados...");
@@ -25,8 +24,8 @@ public class Testconfig implements CommandLineRunner {
 
         desastreNaturalRepository.save(desastre);
 
-        Irrigacao irrigacao = new Irrigacao(null, "Magé", true, Instant.parse("2024-10-20T19:53:07Z"));
+        br.com.fiap.monitoramento_ambiental.models.QualidadeAr qualidadeAr = new br.com.fiap.monitoramento_ambiental.models.QualidadeAr(null, "Magé", NivelPoluicao.Baixo, Instant.parse("2024-10-20T19:53:07Z"));
 
-        irrigacaoRepository.save(irrigacao);
+        this.qualidadeArRepository.save(qualidadeAr);
     }
 }
