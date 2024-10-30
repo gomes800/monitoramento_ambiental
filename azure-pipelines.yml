@@ -10,7 +10,7 @@ pool:
 variables:
   appName: "monitoramentoambiental"
   artifactName: "monitoramento_ambiental-0.0.1-SNAPSHOT.jar"
-  resourceGroup: "Trabalhos"
+  resourceGroup: "Trabalho"
 
 jobs:
 - job: build
