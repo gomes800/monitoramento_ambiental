@@ -1,8 +1,10 @@
 package br.com.fiap.monitoramento_ambiental.controllers;
 
 import br.com.fiap.monitoramento_ambiental.models.DesastreNatural;
+import br.com.fiap.monitoramento_ambiental.models.QualidadeAgua;
 import br.com.fiap.monitoramento_ambiental.services.DesastreNaturalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +29,24 @@ public class DesastreNaturalController {
     @PostMapping
     public DesastreNatural createDesastre(@RequestBody DesastreNatural desastreNatural) {
         return service.save(desastreNatural);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DesastreNatural> updateDesastreNatural(@PathVariable Long id, @RequestBody DesastreNatural desastreNatural) {
+
+        DesastreNatural existingDesastreNatural = service.findById(id);
+
+        if (existingDesastreNatural != null) {
+            existingDesastreNatural.setTipo(desastreNatural.getTipo());
+            existingDesastreNatural.setLocalizacao(desastreNatural.getLocalizacao());
+            existingDesastreNatural.setSeveridade(desastreNatural.getSeveridade());
+            existingDesastreNatural.setDataHora(desastreNatural.getDataHora());
+
+            DesastreNatural updatedDesastreNatural = service.save(existingDesastreNatural);
+            return ResponseEntity.ok(updatedDesastreNatural);
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
