@@ -1,7 +1,6 @@
 package br.com.fiap.monitoramento_ambiental.controllers;
 
 import br.com.fiap.monitoramento_ambiental.models.DesastreNatural;
-import br.com.fiap.monitoramento_ambiental.models.QualidadeAgua;
 import br.com.fiap.monitoramento_ambiental.services.DesastreNaturalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

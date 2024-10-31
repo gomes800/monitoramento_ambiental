@@ -4,9 +4,9 @@ import br.com.fiap.monitoramento_ambiental.controllers.exceptions.NivelPoluicaoI
 
 public enum NivelPoluicao {
 
-    Baixo(1),
-    Moderado(2),
-    Alto(3);
+    Baixo(0),
+    Moderado(1),
+    Alto(2);
 
     private int code;
 
@@ -20,7 +20,7 @@ public enum NivelPoluicao {
 
     public static NivelPoluicao valueOf(int code) {
         for (NivelPoluicao nivel : NivelPoluicao.values()) {
-            if (nivel.getCode() == code) {
+            if (nivel.getCode() + 1 == code) {
                 return nivel;
             }
         }
