@@ -1,5 +1,6 @@
 package br.com.fiap.monitoramento_ambiental.controllers;
 
+import br.com.fiap.monitoramento_ambiental.controllers.exceptions.ErrorResponse;
 import br.com.fiap.monitoramento_ambiental.models.QualidadeAgua;
 import br.com.fiap.monitoramento_ambiental.models.QualidadeAr;
 import br.com.fiap.monitoramento_ambiental.services.QualidadeAguaService;
@@ -33,9 +34,17 @@ public class QualidadeAguaController {
 
 
     @PostMapping
-    public QualidadeAgua createQualidadeAgua(@RequestBody QualidadeAgua qualidadeAgua) {
-        return service.save(qualidadeAgua);
+    public ResponseEntity<?> createQualidadeAgua(@RequestBody QualidadeAgua qualidadeAgua) {
+        // Verifique se a localização está vazia
+        if (qualidadeAgua.getLocalizacao() == null || qualidadeAgua.getLocalizacao().isEmpty()) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("A localização é obrigatória."));
+        }
+
+        // Salve a qualidade da água se a validação passar
+        QualidadeAgua savedQualidadeAgua = service.save(qualidadeAgua);
+        return ResponseEntity.ok(savedQualidadeAgua);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<QualidadeAgua> updateQualidadeAgua(@PathVariable Long id, @RequestBody QualidadeAgua qualidadeAgua) {

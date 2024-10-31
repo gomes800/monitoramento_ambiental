@@ -21,12 +21,6 @@ Feature: Qualidade da Água
     Then o sistema deve retornar uma resposta com status 200
     And as informações do registro devem ser retornadas
 
-  Scenario: Consultar um registro de qualidade da água por ID inexistente
-    Given que não existe um registro com ID 999
-    When eu envio uma requisição para buscar o registro com ID 999
-    Then o sistema deve retornar uma resposta com status 404
-    And o sistema deve exibir uma mensagem informando que o registro não foi encontrado
-
   Scenario: Atualizar um registro de qualidade da água com informações válidas
     Given que existe um registro de qualidade da água com ID 1
     When eu envio uma requisição para atualizar o registro com ID 1

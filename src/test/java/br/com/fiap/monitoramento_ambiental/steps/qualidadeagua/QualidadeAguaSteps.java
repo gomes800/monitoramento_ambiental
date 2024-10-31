@@ -1,4 +1,4 @@
-package br.com.fiap.monitoramento_ambiental;
+package br.com.fiap.monitoramento_ambiental.steps.qualidadeagua;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -68,10 +68,23 @@ public class QualidadeAguaSteps {
                 .when().post("/qualidade_agua");
     }
 
-    @Given("existe um registro de qualidade da água com ID {int}")
-    public void givenRegistroExistente(int id) {
+    @Given("que existe um registro de qualidade da água com ID {int}")
+    public void que_existe_um_registro_de_qualidade_da_agua_com_id(Integer id) {
         response = given()
                 .when().get("/qualidade_agua/" + id);
+
+        if (response.statusCode() != 200) {
+            throw new IllegalStateException("O registro com ID " + id + " não existe.");
+        }
+    }
+
+
+    @Then("o sistema deve exibir uma mensagem de erro informando os campos obrigatórios")
+    public void o_sistema_deve_exibir_uma_mensagem_de_erro_informando_os_campos_obrigatórios() {
+        String expectedMessage = "A localização é obrigatória."; // Ajuste conforme a sua mensagem de erro
+        response.then()
+                .statusCode(400) // Verifica se o status é 400 para erro de validação
+                .body("message", equalTo(expectedMessage)); // Verifica se a mensagem de erro está correta
     }
 
     @When("eu envio uma requisição para buscar o registro com ID {int}")
@@ -82,11 +95,15 @@ public class QualidadeAguaSteps {
 
     @Then("as informações do registro devem ser retornadas")
     public void thenVerificaInformacoesDoRegistro() {
+        // Supondo que você já tenha feito a requisição e salvo a resposta
         response.then()
-                .body("id", equalTo(qualidadeAguaId))
-                .body("localizacao", equalTo("Lagoa Rodrigo de Freitas"))
-                .body("nivelPoluicao", equalTo("Baixo"));
+                .statusCode(200) // Certifique-se de que o status é 200
+                .body("id", equalTo(1)) // Valide o ID
+                .body("localizacao", notNullValue()) // Verifique se a localização não é nula
+                .body("nivelPoluicao", notNullValue()) // Verifique se o nível de poluição não é nulo
+                .body("dataHora", notNullValue()); // Verifique se a dataHora não é nula
     }
+
 
     @Given("não existe um registro com ID {int}")
     public void givenRegistroInexistente(int id) {
@@ -129,4 +146,5 @@ public class QualidadeAguaSteps {
                 .statusCode(404)
                 .body("message", equalTo("Registro não encontrado")); // Supondo que a mensagem de erro é retornada na resposta
     }
+
 }

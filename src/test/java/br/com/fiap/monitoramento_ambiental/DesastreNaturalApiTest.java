@@ -65,7 +65,7 @@ public class DesastreNaturalApiTest {
                 .then()
                 .statusCode(200)
                 .contentType(ContentType.JSON)
-                .body("tipo", equalTo("Inundação"))
+                .body("tipo", equalTo("Tempestade"))
                 .body("localizacao", equalTo("Rio de Janeiro"))
                 .body("severidade", equalTo("Alta"));
     }

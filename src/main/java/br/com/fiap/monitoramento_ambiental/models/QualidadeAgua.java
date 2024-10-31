@@ -16,12 +16,12 @@ public class QualidadeAgua {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String localizacao;
-    private NivelPoluicao nivelPoluicao;
+    private String nivelPoluicao;
     private Instant dataHora;
 
     public QualidadeAgua(){}
 
-    public QualidadeAgua(Long id, String localizacao, NivelPoluicao nivelPoluicao, Instant dataHora) {
+    public QualidadeAgua(Long id, String localizacao, String nivelPoluicao, Instant dataHora) {
         this.id = id;
         this.localizacao = localizacao;
         this.nivelPoluicao = nivelPoluicao;
