@@ -1,12 +1,17 @@
 package br.com.fiap.monitoramento_ambiental.steps.qualidadeagua;
 
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.cucumber.java.Before;
-import io.cucumber.java.en.*;
-import static org.hamcrest.Matchers.*;
+
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class QualidadeAguaSteps {
     private Response response;
@@ -52,6 +57,13 @@ public class QualidadeAguaSteps {
                 .body("localizacao", equalTo("Lagoa Rodrigo de Freitas"))
                 .body("nivelPoluicao", equalTo("Baixo"));
     }
+
+    @Then("o sistema deve validar a resposta contra o esquema JSON")
+    public void thenValidaRespostaContraEsquemaJson() {
+        response.then()
+                .body(matchesJsonSchemaInClasspath("schemas/qualidadeAguaSchema.json"));
+    }
+
 
     @Given("que eu tenho um registro sem localização")
     public void givenRegistroSemLocalizacao() {

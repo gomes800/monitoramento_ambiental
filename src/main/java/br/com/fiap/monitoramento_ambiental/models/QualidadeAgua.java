@@ -1,6 +1,5 @@
 package br.com.fiap.monitoramento_ambiental.models;
 
-import br.com.fiap.monitoramento_ambiental.models.enums.NivelPoluicao;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

@@ -2,7 +2,6 @@ package br.com.fiap.monitoramento_ambiental.controllers;
 
 import br.com.fiap.monitoramento_ambiental.controllers.exceptions.ErrorResponse;
 import br.com.fiap.monitoramento_ambiental.models.QualidadeAgua;
-import br.com.fiap.monitoramento_ambiental.models.QualidadeAr;
 import br.com.fiap.monitoramento_ambiental.services.QualidadeAguaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

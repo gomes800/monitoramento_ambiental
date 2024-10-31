@@ -8,6 +8,7 @@ Feature: Qualidade da Água
     When eu envio uma requisição para criar esse registro
     Then o sistema deve retornar uma resposta com status 200
     And o sistema deve registrar o registro com essas informações
+    And o sistema deve validar a resposta contra o esquema JSON
 
   Scenario: Tentar criar um registro de qualidade da água com dados inválidos
     Given que eu tenho um registro sem localização
