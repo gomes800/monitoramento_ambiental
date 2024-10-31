@@ -20,7 +20,7 @@ public enum NivelPoluicao {
 
     public static NivelPoluicao valueOf(int code) {
         for (NivelPoluicao nivel : NivelPoluicao.values()) {
-            if (nivel.getCode() + 1 == code) {
+            if (nivel.getCode() == code) {
                 return nivel;
             }
         }
