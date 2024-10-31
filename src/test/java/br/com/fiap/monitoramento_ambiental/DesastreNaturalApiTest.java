@@ -51,10 +51,10 @@ public class DesastreNaturalApiTest {
     public void testCreateDesastre_StatusCodeAndResponseBody() {
         String novoDesastreJson = """
             {
-                "tipo": "Inundação",
+                "tipo": "Tempestade",
                 "localizacao": "Rio de Janeiro",
                 "severidade": "Alta",
-                "dataHora": "2024-10-31T10:00:00Z"
+                "dataHora": "2024-11-15T10:00:00Z"
             }
         """;
 

@@ -22,9 +22,15 @@ public class QualidadeAguaController {
     }
 
     @GetMapping("/{id}")
-    public QualidadeAgua getQualidadeAguaById(@PathVariable Long id) {
-        return service.findById(id);
+    public ResponseEntity<QualidadeAgua> getQualidadeAguaById(@PathVariable Long id) {
+        QualidadeAgua qualidadeAgua = service.findById(id);
+        if (qualidadeAgua != null) {
+            return ResponseEntity.ok(qualidadeAgua);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 
     @PostMapping
     public QualidadeAgua createQualidadeAgua(@RequestBody QualidadeAgua qualidadeAgua) {

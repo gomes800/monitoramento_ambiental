@@ -35,10 +35,13 @@ public class Testconfig implements CommandLineRunner {
 
         QualidadeAr qualidadeAr = new QualidadeAr(null, "Magé", NivelPoluicao.Baixo, Instant.parse("2024-10-20T19:53:07Z"));
 
+
         this.qualidadeArRepository.save(qualidadeAr);
 
-        QualidadeAgua qualidadeAgua = new QualidadeAgua(null, "Macaé", NivelPoluicao.Moderado, Instant.parse("2024-10-25T15:00:07Z"));
+        QualidadeAgua qualidadeAgua1 = new QualidadeAgua(null, "Macaé", NivelPoluicao.Moderado, Instant.parse("2024-10-25T15:00:07Z"));
+        QualidadeAgua qualidadeAgua2 = new QualidadeAgua(null, "Três rios", NivelPoluicao.Alto, Instant.parse("2024-11-25T15:00:07Z"));
 
-        this.qualidadeAguaRepository.save(qualidadeAgua);
+        this.qualidadeAguaRepository.save(qualidadeAgua1);
+        this.qualidadeAguaRepository.save(qualidadeAgua2);
     }
 }
