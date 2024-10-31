@@ -21,8 +21,13 @@ public class DesastreNaturalController {
     }
 
     @GetMapping("/{id}")
-    public DesastreNatural getDesastreById(@PathVariable Long id) {
-        return service.findById(id);
+    public ResponseEntity<DesastreNatural> getDesastreById(@PathVariable Long id) {
+        DesastreNatural desastre = service.findById(id);
+        if (desastre != null) {
+            return ResponseEntity.ok(desastre);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping

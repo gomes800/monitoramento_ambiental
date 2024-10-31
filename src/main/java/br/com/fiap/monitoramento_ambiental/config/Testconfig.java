@@ -26,9 +26,12 @@ public class Testconfig implements CommandLineRunner {
 
     public void run(String... args) throws Exception {
         System.out.println("Inicializando dados...");
-        DesastreNatural desastre = new DesastreNatural(null, "Terremoto", "São Paulo", "Alto", Instant.parse("2019-06-20T19:53:07Z"));
-
-        desastreNaturalRepository.save(desastre);
+        DesastreNatural desastre1 = new DesastreNatural(null, "Terremoto", "Califórnia", "Alto", Instant.parse("2024-08-30T19:53:07Z"));
+        DesastreNatural desastre2 = new DesastreNatural(null, "Tsunami", "Japão", "Alto", Instant.parse("2024-10-29T19:53:07Z"));
+        DesastreNatural desastre3 = new DesastreNatural(null, "Enchente", "Rio de Janeiro", "Alto", Instant.parse("2024-10-31T19:53:07Z"));
+        desastreNaturalRepository.save(desastre1);
+        desastreNaturalRepository.save(desastre2);
+        desastreNaturalRepository.save(desastre3);
 
         QualidadeAr qualidadeAr = new QualidadeAr(null, "Magé", NivelPoluicao.Baixo, Instant.parse("2024-10-20T19:53:07Z"));
 
